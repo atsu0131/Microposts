@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180529031429) do
+ActiveRecord::Schema.define(version: 20180629060914) do
 
   create_table "microposts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "content"
@@ -18,6 +18,18 @@ ActiveRecord::Schema.define(version: 20180529031429) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_microposts_on_user_id", using: :btree
+  end
+
+  create_table "ownerships", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "type"
+    t.string   "string"
+    t.integer  "user_id"
+    t.integer  "likes_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["likes_id"], name: "index_ownerships_on_likes_id", using: :btree
+    t.index ["user_id", "likes_id", "type"], name: "index_ownerships_on_user_id_and_likes_id_and_type", unique: true, using: :btree
+    t.index ["user_id"], name: "index_ownerships_on_user_id", using: :btree
   end
 
   create_table "relationships", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
